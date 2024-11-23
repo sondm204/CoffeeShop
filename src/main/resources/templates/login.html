@@ -14,8 +14,6 @@
     />
   </head>
   <body class="relative font-sans">
-    <!--    <c:set var="status" value="${LOGINSTATUS}" />-->
-    <!--    <c:set var="regisErrors" value="${REGIS_ERRORS}" />-->
     <img
       class="absolute h-full w-full object-cover"
       src="../img/page/pexels-n-voitkevich-7852566.jpg"
@@ -48,41 +46,33 @@
               </p>
             </div>
             <form class="" th:action="@{/authenticateTheUser}" method="POST">
-              <!--              <c:if test="${status.equals('error')}">-->
-              <!--                <div>-->
-              <!--                  <i-->
-              <!--                    class="my-2 inline-block w-full rounded bg-slate-300 p-3 text-red-500"-->
-              <!--                    >Your username or password is wrong</i-->
-              <!--                  >-->
-              <!--                </div>-->
-              <!--              </c:if>-->
+              <div th:if="${param.error}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-slate-300 p-3 text-red-500"
+                  >Your username or password is wrong</i
+                >
+              </div>
 
-              <!--              <c:if test="${status.equals('logout')}">-->
-              <!--                <div>-->
-              <!--                  <i-->
-              <!--                    class="my-2 inline-block w-full rounded bg-slate-300 p-3 text-green-600"-->
-              <!--                    >You have been logged out</i-->
-              <!--                  >-->
-              <!--                </div>-->
-              <!--              </c:if>-->
+              <div th:if="${param.logout}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-slate-300 p-3 text-green-600"
+                  >You have been logged out</i
+                >
+              </div>
 
-              <!--              <c:if test="${status.equals('regisSuccess')}">-->
-              <!--                <div>-->
-              <!--                  <i-->
-              <!--                    class="my-2 inline-block w-full rounded bg-green-200 p-3 text-green-600"-->
-              <!--                    >Register successfully!</i-->
-              <!--                  >-->
-              <!--                </div>-->
-              <!--              </c:if>-->
+              <div th:if="${param.regisSuccess}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-green-200 p-3 text-green-600"
+                  >Register successfully!</i
+                >
+              </div>
 
-              <!--              <c:if test="${status.equals('resetSuccess')}">-->
-              <!--                <div>-->
-              <!--                  <i-->
-              <!--                    class="my-2 inline-block w-full rounded bg-green-200 p-3 text-green-600"-->
-              <!--                    >Reset Password successfully!</i-->
-              <!--                  >-->
-              <!--                </div>-->
-              <!--              </c:if>-->
+              <div th:if="${param.resetSuccess}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-green-200 p-3 text-green-600"
+                  >Reset Password successfully!</i
+                >
+              </div>
               <div class="my-2">
                 <label for="username_login">Username</label>
                 <input
