@@ -18,8 +18,13 @@ public class CaffeShopSecurity {
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_name, password, active from login where user_name=?");
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_name, role_name from role where user_name=?");
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select username, password, active from users where username=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
+                "select u.username, r.role_name " +
+                        "from users u " +
+                        "join role r on u.role_id = r.id " +
+                        "where u.username=?"
+        );
         return jdbcUserDetailsManager;
     }
 
@@ -45,15 +50,17 @@ public class CaffeShopSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(configurer ->
-                        configurer
-                                .requestMatchers("/").hasAnyRole("CUSTOMER", "MANAGER")
-                                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                                .anyRequest().authenticated()
+                                configurer
+//                                        .requestMatchers("/CoffeeShop/**").permitAll()
+                                        .requestMatchers("/CoffeeShop/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                        .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                                        .anyRequest().authenticated()
                 )
                 .formLogin(form ->
                         form
-                                .loginPage("/showLoginPage")
+                                .loginPage("/CoffeeShop/login")
                                 .loginProcessingUrl("/authenticateTheUser")
+                                .defaultSuccessUrl("/CoffeeShop/home", true)
                                 .permitAll()
                 )
                 .logout(configurer ->
@@ -61,7 +68,7 @@ public class CaffeShopSecurity {
                 )
                 .exceptionHandling(configurer ->
                         configurer
-                                .accessDeniedPage("/access-denied")
+                                .accessDeniedPage("/CoffeeShop/access-denied")
                 );
         return http.build();
     }
