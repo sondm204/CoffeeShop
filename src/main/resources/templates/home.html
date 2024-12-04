@@ -1,6 +1,23 @@
-<head>
-</head>
-<div class="flex flex-col">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="overflow-x-hidden scroll-smooth font-serif">
+    <div class="flex flex-col">
+      <!-- HEADER DYNAMIC -->
+      <!--    <%@ include file="./include/header-dynamic.jsp" %>-->
+      <!--    <%@ include file="./chatbot.jsp" %>-->
 
       <div th:insert="common/header-dynamic :: header"></div>
       <section class="h-screen">
