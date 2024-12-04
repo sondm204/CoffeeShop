@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      th:fragment="header"
+      id="navbar"
+      class="fixed z-50 hidden h-[12%] w-full animate-moveInDownFull bg-black font-serif text-white"
+    >
+      <div class="flex h-full items-center justify-around">
+        <a href="./home" class="cursor-pointer text-4xl font-bold text-white"
+          >Caffeine</a
+        >
+        <div class="">
+          <ul class="flex flex-row">
+            <li class="mx-4 cursor-pointer hover:text-coffee-700">
+              <a href="./home">Home</a>
+            </li>
+            <li class="mx-4 cursor-pointer hover:text-coffee-700">
+              <a href="./menu">Menu</a>
+            </li>
+            <li class="mx-4 cursor-pointer hover:text-coffee-700">
+              <a href="./about-us">About Us</a>
+            </li>
+            <li class="mx-4 cursor-pointer hover:text-coffee-700">
+              <a href="./blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="flex flex-row">
+          <a
+            th:if="${session.user == null}"
+            href="./login"
+            class="cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+            >Sign in
+          </a>
+          <div th:if="${session.user != null}" class="group relative">
+            <a
+              href="./profile"
+              class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white"
+            >
+              <i class="fa-solid fa-user text-black"></i>
+            </a>
+            <div
+              class="absolute right-0 z-20 hidden min-w-40 animate-showDown rounded bg-white group-hover:block"
+            >
+              <div class="text-black">
+                <div class="rounded-t bg-coffee-500 text-xl">
+                  <h1
+                    class="p-2"
+                    th:text="${session.user.getLastName()} + ' ' + ${session.user.getFirstName()}"
+                  ></h1>
+                </div>
+                <div class="rounded-b p-2 hover:bg-coffee-200">
+                  <a href="./login" class="block h-full w-full">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mx-4 border-r-2 border-white"></div>
+          <div class="cursor-pointer hover:text-coffee-700">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+        </div>
+      </div>
+      <script>
+        window.onscroll = function () {
+          toggleNavbar();
+        };
+
+        function toggleNavbar() {
+          if (
+            document.body.scrollTop > 50 ||
+            document.documentElement.scrollTop > 50
+          ) {
+            document.getElementById("navbar").classList.remove("hidden");
+            document.getElementById("navbar").classList.remove("z-[-1]");
+          } else {
+            document.getElementById("navbar").classList.add("hidden");
+            document.getElementById("navbar").classList.add("z-[-1]");
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>

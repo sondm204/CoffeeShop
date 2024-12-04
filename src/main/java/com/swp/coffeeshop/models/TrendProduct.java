@@ -16,7 +16,7 @@ public class TrendProduct {
     @JoinColumn(name = "trend_id")
     private Trend trend;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "product_id")
     private Product product;

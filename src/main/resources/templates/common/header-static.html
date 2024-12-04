@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      th:fragment="header"
+      id="header-static"
+      class="z-50 my-4 w-full border-2 font-serif"
+    >
+      <div class="m-3 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="./home" class="cursor-pointer text-4xl font-bold">Caffeine</a>
+
+        <!-- Hamburger Icon for Mobile -->
+        <div class="cursor-pointer text-2xl md:hidden" id="menu-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <!-- Menu Items (Hidden on mobile) -->
+        <div class="hidden md:flex">
+          <ul class="flex flex-row">
+            <li
+              class="mx-4 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+            >
+              <a href="./home">Home</a>
+            </li>
+            <li
+              class="mx-4 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+            >
+              <a href="./menu">Menu</a>
+            </li>
+            <li
+              class="mx-4 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+            >
+              <a href="./about-us">About Us</a>
+            </li>
+            <li
+              class="mx-4 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+            >
+              <a href="./blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- User and Cart Icons (Visible on all devices) -->
+        <div class="flex flex-row items-center">
+          <a
+            th:if="${session.user == null}"
+            href="./login"
+            class="cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+            >Sign in</a
+          >
+          <div th:if="${session.user != null}" class="group relative">
+            <a
+              href="./profile"
+              class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white"
+            >
+              <i class="fa-solid fa-user text-black"></i>
+            </a>
+            <div
+              class="absolute right-0 z-20 hidden min-w-40 animate-showDown rounded bg-white group-hover:block"
+            >
+              <div class="text-black">
+                <div class="rounded-t bg-coffee-500 text-xl">
+                  <h1
+                    class="p-2"
+                    th:text="${session.user.getLastName()} + ' ' + ${session.user.getFirstName()}"
+                  ></h1>
+                </div>
+                <div class="rounded-b p-2 hover:bg-coffee-200">
+                  <a href="./login" class="block h-full w-full">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="hr" class="mx-4 border-r-2"></div>
+          <div
+            class="flex cursor-pointer items-center transition duration-200 ease-in-out hover:text-coffee-700"
+          >
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu (Hidden by default) -->
+      <div id="mobile-menu" class="hidden flex-col items-center lg:hidden">
+        <ul class="mt-3 flex flex-col text-center">
+          <li
+            class="my-2 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+          >
+            <a href="./home">Home</a>
+          </li>
+          <li
+            class="my-2 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+          >
+            <a href="./menu">Menu</a>
+          </li>
+          <li
+            class="my-2 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+          >
+            <a href="./about-us">About Us</a>
+          </li>
+          <li
+            class="my-2 cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
+          >
+            <a href="./blog">Blog</a>
+          </li>
+        </ul>
+      </div>
+      <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        menuToggle.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+      </script>
+
+      <script>
+        var pathName = window.location.pathname;
+        if (pathName.includes("home")) {
+          document
+            .getElementById("header-static")
+            .classList.add("border-white", "text-white");
+          document.getElementById("hr").classList.add("border-white");
+        } else {
+          document
+            .getElementById("header-static")
+            .classList.add("border-black", "text-black");
+          document.getElementById("hr").classList.add("border-black");
+        }
+      </script>
+    </div>
+  </body>
+</html>
