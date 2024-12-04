@@ -1,0 +1,134 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="relative font-sans">
+    <img
+      class="absolute h-full w-full object-cover"
+      src="../img/page/pexels-n-voitkevich-7852566.jpg"
+      alt=""
+    />
+    <div
+      class="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center"
+    >
+      <div class="z-10 grid w-full grid-cols-12 rounded bg-white">
+        <div class="col-span-5">
+          <img
+            class="h-full w-full rounded-l object-cover"
+            src="../img/page/pexels-photo-302896.webp"
+            alt="Coffee"
+          />
+        </div>
+
+        <!-- Login -->
+        <div
+          id="loginForm"
+          class="col-span-7 flex flex-col items-center justify-center"
+        >
+          <div class="max-w-md">
+            <div class="mb-5 text-center">
+              <h1 class="text-center text-xl font-bold text-slate-800">
+                Welcome Back
+              </h1>
+              <p class="text-gray-500">
+                Enter your account credentials to view your orders
+              </p>
+            </div>
+            <form class="" th:action="@{/authenticateTheUser}" method="POST">
+              <div th:if="${param.error}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-slate-300 p-3 text-red-500"
+                  >Your username or password is wrong</i
+                >
+              </div>
+
+              <div th:if="${param.logout}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-slate-300 p-3 text-green-600"
+                  >You have been logged out</i
+                >
+              </div>
+
+              <div th:if="${param.regisSuccess}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-green-200 p-3 text-green-600"
+                  >Register successfully!</i
+                >
+              </div>
+
+              <div th:if="${param.resetSuccess}">
+                <i
+                  class="my-2 inline-block w-full rounded bg-green-200 p-3 text-green-600"
+                  >Reset Password successfully!</i
+                >
+              </div>
+              <div class="my-2">
+                <label for="username_login">Username</label>
+                <input
+                  id="username_login"
+                  class="text-md my-1 w-full rounded border border-gray-300 p-2"
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  required
+                /><br />
+              </div>
+              <div class="my-2">
+                <label for="password_login">Password</label>
+                <input
+                  id="password_login"
+                  class="text-md my-1 w-full rounded border border-gray-300 p-2"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                /><br />
+              </div>
+              <a
+                class="block text-end text-sm text-blue-500"
+                href="./reset-password?status=enterAccount"
+                >Forgot your password?</a
+              >
+              <input
+                class="my-3 w-full cursor-pointer rounded bg-green-500 px-3 py-2 text-white"
+                type="submit"
+                value="Login"
+              />
+            </form>
+            <p class="text-center text-sm">
+              Don't have an account?
+              <a id="loginToggle" class="cursor-pointer text-blue-500"
+                >Sign Up</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--home button-->
+    <a
+      href="./home"
+      class="absolute left-5 top-5 flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white transition duration-200 ease-in-out hover:bg-coffee-200"
+    >
+      <i class="fa-solid fa-house"></i>
+    </a>
+    <script>
+      document
+        .querySelector("#loginToggle")
+        .addEventListener("click", function () {
+          window.location.replace("/CoffeeShop/registration");
+        });
+    </script>
+  </body>
+</html>

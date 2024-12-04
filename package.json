@@ -1,5 +1,16 @@
 {
   "devDependencies": {
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.10"
+  },
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
+  "scripts": {
+    "start": "npm run build-css & npm run dev",
+    "build-css": "tailwindcss build -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css",
+    "watch-css": "tailwindcss build -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch",
+    "dev": "npx tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch"
   }
 }

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section th:fragment="footer">
+      <!-- EMAIL -->
+      <div class="bg-coffee-500 py-20">
+        <div class="container mx-auto">
+          <div class="flex justify-between gap-20">
+            <div class="flex items-center">
+              <h1 class="text-4xl font-bold capitalize">
+                Stay Up To Date On All New And Offers.
+              </h1>
+            </div>
+            <div>
+              <p class="capitalize text-coffee-700">
+                be the first to know about new collections, special events, and
+                what's going on at kitchen
+              </p>
+              <div class="mt-10 flex w-full">
+                <input
+                  class="w-full bg-[#bc9d7e] px-2 py-3 text-black placeholder:text-coffee-700"
+                  type="text"
+                  placeholder="Enter Your Email Address"
+                />
+                <button class="bg-black px-6 text-xl text-white">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- CONTACT -->
+      <div class="bg-black text-white">
+        <div class="grid grid-cols-11 border-b-2 border-b-coffee-500">
+          <div class="col-span-1"></div>
+          <div class="col-span-3 border-x-2 border-x-coffee-500 py-20">
+            <div class="mx-auto w-11/12 border-4 border-white">
+              <img
+                src="../img/page/z2839028153583_6b6b7b8184035519bb88526078a17cfd-2048x1366.jpg"
+                alt=""
+              />
+            </div>
+            <div class="m-4 text-xl">
+              <div>Enjoy Better And Better</div>
+              <div>Quality Coffee With Caffeine</div>
+            </div>
+          </div>
+          <div class="col-span-3 py-20">
+            <div class="mx-4">
+              <h1 class="text-4xl font-bold">Contact Us</h1>
+              <div class="my-2 text-2xl">Caffeine@Gmail.com</div>
+              <div class="my-2 text-2xl">
+                <div>
+                  Call Us: <span class="text-coffee-500">+84 123 456 789</span>
+                </div>
+                <div>
+                  Text Us: <span class="text-coffee-500">+84 123 456 789</span>
+                </div>
+              </div>
+              <div class="my-2 text-2xl text-coffee-500">
+                <div>
+                  Showroom 01: 21 ngõ 30 Mai Anh Tuấn, phường Ô chợ Dừa, quận
+                  Đống Đa, Hà Nội
+                </div>
+                <div>Showroom 02: 92 Phan Kế Bính, Đống Đa, Hà Nội</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-3 border-x-2 border-x-coffee-500 py-20">
+            <div>
+              <div
+                class="mx-auto flex w-11/12 justify-center overflow-hidden border-4 border-white"
+              >
+                <iframe
+                  width="370"
+                  height="200"
+                  src="https://www.youtube.com/embed/0jIeCAOkgcQ"
+                  title="Coffee reels - macro videos"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+            <div class="mx-4 my-8">
+              <h1 class="text-2xl font-bold">Follow Us</h1>
+              <div class="my-3 flex h-10 gap-6 text-3xl text-coffee-500">
+                <a
+                  class="w-8 cursor-pointer transition duration-200 ease-in-out hover:text-4xl"
+                  ><i class="fa-brands fa-pinterest"></i
+                ></a>
+                <a
+                  class="w-8 cursor-pointer transition duration-200 ease-in-out hover:text-4xl"
+                  ><i class="fa-brands fa-instagram"></i
+                ></a>
+                <a
+                  class="w-8 cursor-pointer transition duration-200 ease-in-out hover:text-4xl"
+                  ><i class="fa-brands fa-twitter"></i
+                ></a>
+                <a
+                  class="w-8 cursor-pointer transition duration-200 ease-in-out hover:text-4xl"
+                  ><i class="fa-brands fa-facebook"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1"></div>
+        </div>
+        <!--  -->
+        <div class="flex justify-center py-10">
+          <a
+            class="transition duration-200 ease-in-out hover:text-coffee-500"
+            href=""
+            >Chính sách bảo mật</a
+          >
+          <div class="mx-3 h-6 border-r-2 border-r-coffee-500"></div>
+          <a
+            class="transition duration-200 ease-in-out hover:text-coffee-500"
+            href=""
+            >Chính sách vận chuyển</a
+          >
+          <div class="mx-3 h-6 border-r-2 border-r-coffee-500"></div>
+
+          <a
+            class="transition duration-200 ease-in-out hover:text-coffee-500"
+            href=""
+            >Chính sách bảo hành</a
+          >
+          <div class="mx-3 h-6 border-r-2 border-r-coffee-500"></div>
+          <a
+            class="transition duration-200 ease-in-out hover:text-coffee-500"
+            href=""
+            >Hướng dẫn mua hàng và thanh toán</a
+          >
+          <div class="mx-3 h-6 border-r-2 border-r-coffee-500"></div>
+          <a
+            class="transition duration-200 ease-in-out hover:text-coffee-500"
+            href=""
+            >Câu hỏi thường gặp</a
+          >
+        </div>
+      </div>
+      <!--  -->
+      <div class="bg-black text-white">
+        <div class="border-t-2 border-t-coffee-500">
+          <div class="py-5 text-center text-xl">
+            © 3C ROASTERY - SPECIALTY COFFEE FROM VIETNAM
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

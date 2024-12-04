@@ -1,0 +1,267 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registration</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="relative font-sans">
+    <img
+      class="absolute h-full w-full object-cover"
+      src="../img/page/pexels-n-voitkevich-7852566.jpg"
+      alt=""
+    />
+    <div
+      class="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center"
+    >
+      <div class="z-10 grid w-full grid-cols-12 rounded bg-white">
+        <div class="col-span-5">
+          <img
+            class="h-full w-full rounded-l object-cover"
+            src="../img/page/pexels-photo-302896.webp"
+            alt="Coffee"
+          />
+        </div>
+
+        <!-- Sign Up -->
+        <div
+          id="signUpForm"
+          class="col-span-7 flex flex-col items-center justify-center"
+        >
+          <div class="max-w-md">
+            <div class="mb-5 text-center">
+              <h1 class="text-center text-xl font-bold text-slate-800">
+                Registration
+              </h1>
+              <p class="text-gray-500">
+                Complete your profile by filling in this account creation form
+              </p>
+            </div>
+            <form class="" action="./registration" method="POST">
+              <div class="relative my-2">
+                <!--                  <div-->
+                <!--                          th:if="${regisErrors.getDupplicatedUsername() != null}"-->
+                <!--                    class="absolute right-0 top-0 translate-x-3/4 rounded bg-yellow-200 p-3 text-xs"-->
+                <!--                  >-->
+                <!--                    ${regisErrors.getDupplicatedUsername()}!-->
+                <!--                  </div>-->
+                <!--                </th:if>-->
+                <!--                <c:if test="${regisErrors.getNotFormatUsername() != null}">-->
+                <!--                  <div-->
+                <!--                    class="absolute right-0 top-0 translate-x-3/4 rounded bg-yellow-200 p-3 text-xs"-->
+                <!--                  >-->
+                <!--                    ${regisErrors.getNotFormatUsername()}!-->
+                <!--                  </div>-->
+                <!--                </c:if>-->
+                <label for="username_regis">Username</label>
+                <input
+                  id="username_regis"
+                  class="text-md my-1 w-full rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  required
+                /><br />
+              </div>
+              <div class="relative my-2">
+                <!--                <c:if test="${regisErrors.getNotFormatPassword() != null}">-->
+                <!--                  <ul-->
+                <!--                    class="absolute right-0 top-0 translate-x-3/4 rounded bg-yellow-200 p-3 text-xs"-->
+                <!--                  >-->
+                <!--                    <c:forEach-->
+                <!--                      var="error"-->
+                <!--                      items="${regisErrors.getNotFormatPassword()}"-->
+                <!--                    >-->
+                <!--                      <li>${error}</li>-->
+                <!--                    </c:forEach>-->
+                <!--                  </ul>-->
+                <!--                </c:if>-->
+                <label for="password_regis">Password</label>
+                <input
+                  id="password_regis"
+                  class="text-md my-1 w-full rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                /><br />
+              </div>
+              <div class="my-2">
+                <div class="flex justify-between gap-3">
+                  <div>
+                    <label for="firstName">FirstName</label>
+                    <input
+                      id="firstName"
+                      class="text-md my-1 w-full rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="text"
+                      name="firstname"
+                      placeholder="First Name"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="lastName">LastName</label>
+                    <input
+                      id="lastName"
+                      class="text-md my-1 w-full rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="text"
+                      name="lastname"
+                      placeholder="Last Name"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="my-2 flex gap-5">
+                <p>Gender:</p>
+                <div class="flex gap-4">
+                  <div>
+                    <label for="male">Male</label>
+                    <input
+                      id="male"
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="female">Female</label>
+                    <input
+                      id="female"
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="other">Other</label>
+                    <input
+                      id="other"
+                      type="radio"
+                      name="gender"
+                      value="Other"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative my-2">
+                <!--                <c:if test="${regisErrors.getDupplicatedEmail() != null}">-->
+                <!--                  <div-->
+                <!--                    class="absolute right-0 top-0 translate-x-3/4 rounded bg-yellow-200 p-3 text-xs"-->
+                <!--                  >-->
+                <!--                    ${regisErrors.getDupplicatedEmail()}-->
+                <!--                  </div>-->
+                <!--                </c:if>-->
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  class="text-md my-1 w-full rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                /><br />
+              </div>
+
+              <div class="my-2">
+                <p>Date of Birth</p>
+                <div class="my-2 grid grid-cols-12 gap-3">
+                  <div class="col-span-5">
+                    <select
+                      class="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      name="date-month"
+                      required
+                    >
+                      <option value="" disabled selected>Month</option>
+                      <option value="01">January</option>
+                      <option value="02">February</option>
+                      <option value="03">March</option>
+                      <option value="04">April</option>
+                      <option value="05">May</option>
+                      <option value="06">June</option>
+                      <option value="07">July</option>
+                      <option value="08">August</option>
+                      <option value="09">September</option>
+                      <option value="10">October</option>
+                      <option value="11">November</option>
+                      <option value="12">December</option>
+                    </select>
+                  </div>
+                  <!-- Day Dropdown -->
+                  <div class="col-span-3">
+                    <select
+                      class="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      name="date-day"
+                      required
+                    >
+                      <option value="" disabled selected>Day</option>
+                      <option
+                        th:each="day : ${#numbers.sequence(1, 31)}"
+                        th:value="${day < 10 ? '0' + day : day}"
+                        th:text="${day}"
+                      />
+                    </select>
+                  </div>
+                  <!-- Year Dropdown -->
+                  <div class="col-span-4">
+                    <select
+                      class="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      name="date-year"
+                      required
+                    >
+                      <option value="" disabled selected>Year</option>
+                      <option
+                        th:each="i : ${#numbers.sequence(0, currentYear - 1900)}"
+                        th:value="${currentYear - i}"
+                        th:text="${currentYear - i}"
+                      />
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <input
+                class="my-3 w-full cursor-pointer rounded bg-green-500 px-3 py-2 text-white"
+                type="submit"
+                value="Create Account"
+              />
+            </form>
+            <p class="text-center text-sm">
+              Do you have account?
+              <a id="signUpToggle" class="cursor-pointer text-blue-500"
+                >Sign In</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--home button-->
+    <a
+      href="./home"
+      class="absolute left-5 top-5 flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white transition duration-200 ease-in-out hover:bg-coffee-200"
+    >
+      <i class="fa-solid fa-house"></i>
+    </a>
+    <script>
+      document
+        .querySelector("#signUpToggle")
+        .addEventListener("click", function () {
+          window.location.replace("/CoffeeShop/login");
+        });
+    </script>
+  </body>
+</html>
