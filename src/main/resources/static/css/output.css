@@ -658,6 +658,10 @@ video {
   grid-column: span 1 / span 1;
 }
 
+.col-span-12{
+  grid-column: span 12 / span 12;
+}
+
 .col-span-3{
   grid-column: span 3 / span 3;
 }
@@ -684,6 +688,11 @@ video {
 
 .m-auto{
   margin: auto;
+}
+
+.mx-2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .mx-3{
@@ -731,6 +740,11 @@ video {
   margin-bottom: 1rem;
 }
 
+.my-5{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 .my-8{
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -740,8 +754,16 @@ video {
   margin-bottom: 2.5rem;
 }
 
+.mb-2{
+  margin-bottom: 0.5rem;
+}
+
 .mb-5{
   margin-bottom: 1.25rem;
+}
+
+.mb-7{
+  margin-bottom: 1.75rem;
 }
 
 .ml-10{
@@ -750,6 +772,10 @@ video {
 
 .ml-2{
   margin-left: 0.5rem;
+}
+
+.ml-4{
+  margin-left: 1rem;
 }
 
 .ml-7{
@@ -786,6 +812,13 @@ video {
 
 .mt-7{
   margin-top: 1.75rem;
+}
+
+.line-clamp-2{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .block{
@@ -828,6 +861,10 @@ video {
   height: 2rem;
 }
 
+.h-9{
+  height: 2.25rem;
+}
+
 .h-\[12\%\]{
   height: 12%;
 }
@@ -864,12 +901,20 @@ video {
   width: 91.666667%;
 }
 
+.w-12{
+  width: 3rem;
+}
+
 .w-2\/3{
   width: 66.666667%;
 }
 
 .w-8{
   width: 2rem;
+}
+
+.w-9{
+  width: 2.25rem;
 }
 
 .w-\[250px\]{
@@ -1219,6 +1264,10 @@ video {
   flex-direction: column;
 }
 
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
 .items-center{
   align-items: center;
 }
@@ -1331,6 +1380,10 @@ video {
   border-top-width: 2px;
 }
 
+.border-t-\[1px\]{
+  border-top-width: 1px;
+}
+
 .border-black{
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
@@ -1395,6 +1448,11 @@ video {
 .bg-coffee-200{
   --tw-bg-opacity: 1;
   background-color: rgb(238 225 196 / var(--tw-bg-opacity));
+}
+
+.bg-coffee-300{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 224 181 / var(--tw-bg-opacity));
 }
 
 .bg-coffee-500{
@@ -1482,6 +1540,16 @@ video {
   padding-right: 1.5rem;
 }
 
+.px-7{
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+.py-1{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -1500,6 +1568,11 @@ video {
 .py-3{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-5{
@@ -1573,6 +1646,11 @@ video {
   font-size: 180px;
 }
 
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1590,6 +1668,10 @@ video {
 
 .font-bold{
   font-weight: 700;
+}
+
+.font-medium{
+  font-weight: 500;
 }
 
 .uppercase{
@@ -1662,6 +1744,11 @@ video {
   color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
+.text-slate-400{
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity));
+}
+
 .text-slate-800{
   --tw-text-opacity: 1;
   color: rgb(30 41 59 / var(--tw-text-opacity));
@@ -1702,6 +1789,11 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.active--order{
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(220 179 134 / var(--tw-bg-opacity)) !important;
+}
+
 .placeholder\:text-coffee-700::-moz-placeholder{
   --tw-text-opacity: 1;
   color: rgb(175 130 96 / var(--tw-text-opacity));
@@ -1710,6 +1802,11 @@ video {
 .placeholder\:text-coffee-700::placeholder{
   --tw-text-opacity: 1;
   color: rgb(175 130 96 / var(--tw-text-opacity));
+}
+
+.hover\:-translate-y-1:hover{
+  --tw-translate-y: -0.25rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .hover\:-translate-y-2:hover{
@@ -1730,6 +1827,11 @@ video {
 .hover\:bg-coffee-200:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(238 225 196 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-slate-100:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-white:hover{
@@ -1794,11 +1896,27 @@ video {
   .md\:hidden{
     display: none;
   }
+
+  .md\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1024px){
+  .lg\:col-span-9{
+    grid-column: span 9 / span 9;
+  }
+
+  .lg\:block{
+    display: block;
+  }
+
   .lg\:hidden{
     display: none;
+  }
+
+  .lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
