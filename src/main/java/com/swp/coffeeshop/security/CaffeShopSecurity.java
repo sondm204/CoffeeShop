@@ -58,6 +58,7 @@ public class CaffeShopSecurity {
                                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                                 .anyRequest().authenticated()
                 )
+                .csrf(csrf -> csrf.disable())
                 .formLogin(form ->
                         form
                                 .loginPage("/CoffeeShop/login")
