@@ -1,13 +1,13 @@
 package com.swp.coffeeshop.controller;
 
+import com.sun.tools.jconsole.JConsoleContext;
+import com.swp.coffeeshop.dto.ProductPrice;
 import com.swp.coffeeshop.models.Product;
 import com.swp.coffeeshop.models.ProductVariant;
 import com.swp.coffeeshop.services.Product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -36,5 +36,19 @@ public class ProductController {
         }
         model.addAttribute("attributes", attributes);
         return "product";
+    }
+
+    @PostMapping("/product/{id}/get-price")
+    @ResponseBody
+    public ProductPrice getPrice(@PathVariable("id") int id, @RequestBody Map<String, Object> attributeJson) {
+        ProductVariant variants = productService.getAllProductVariants(id).stream()
+                .filter(v -> v.getAttribute().equals(attributeJson))
+                .toList().getFirst();
+        ProductPrice productPrice = new ProductPrice();
+        productPrice.setSalePrice(variants.getSalePrice());
+        if (variants.getOriginPrice() != null) {
+            productPrice.setOriginPrice(variants.getOriginPrice());
+        }
+        return productPrice;
     }
 }

@@ -16,8 +16,10 @@
   <body class="overflow-x-hidden scroll-smooth font-serif">
     <div class="flex flex-col">
       <!-- HEADER DYNAMIC -->
-      <div th:insert="common/header-dynamic :: header"></div>
+      <!--    <%@ include file="./include/header-dynamic.jsp" %>-->
+      <!--    <%@ include file="./chatbot.jsp" %>-->
 
+      <div th:insert="common/header-dynamic :: header"></div>
       <section class="h-screen">
         <div
           class="absolute bottom-0 left-0 right-0 top-0 bg-gradient-to-r from-black to-[#331c0e] text-white"
