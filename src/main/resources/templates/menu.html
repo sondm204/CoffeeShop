@@ -2,8 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="_csrf" content="your-csrf-token-here" />
-    <meta name="_csrf_header" content="X-CSRF-TOKEN" />
 
     <title>Menu</title>
     <link
@@ -151,7 +149,7 @@
                 >
                   <a
                     th:each="product : ${products}"
-                    th:href="@{'./product-detail?productId=' + ${product.getId()}}"
+                    th:href="@{'./product/' + ${product.getId()}}"
                     class="col-span-1 cursor-pointer rounded bg-white transition duration-200 ease-in-out hover:-translate-y-1"
                   >
                     <div id="product-Image">

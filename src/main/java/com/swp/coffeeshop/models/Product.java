@@ -8,7 +8,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -29,8 +31,12 @@ public class Product {
     private String thumbnailUrl;
 
     @ColumnDefault("0")
-    @Column(name = "price")
+    @Column(name = "min_price")
     private Integer price;
+
+    @ColumnDefault("0")
+    @Column(name = "max_price")
+    private Integer max_price;
 
     @Lob
     @Column(name = "description")
@@ -46,6 +52,8 @@ public class Product {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
+
+
     private LocalDate createdAt;
 
     public Integer getId() {
@@ -86,6 +94,14 @@ public class Product {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getMaxPrice() {
+        return max_price;
+    }
+
+    public void setMaxPrice(Integer price) {
+        this.max_price = price;
     }
 
     public String getDescription() {
