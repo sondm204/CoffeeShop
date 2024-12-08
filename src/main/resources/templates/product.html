@@ -63,7 +63,7 @@
                 <p
                   id="sale-price"
                   class="mb-4 text-2xl font-semibold text-red-500"
-                  th:text="${product.price} + ${product.maxPrice != null ? (' - ' + product.maxPrice) : ''} + 'đ'"
+                  th:text="${product.price} + ${product.maxPrice == null or product.maxPrice == product.price ? '' : (' - ' + product.maxPrice)} + 'đ'"
                 ></p>
 
                 <div
@@ -219,16 +219,21 @@
             attributeJson[selectAttribute.id] = selectAttribute.value;
             if (Object.keys(attributeJson).length === totalAttributes) {
               getPrice(function (priceResponse) {
-                let originPrice = priceResponse.originPrice;
-                let salePrice = priceResponse.salePrice;
-                if (originPrice !== 0) {
-                  document.getElementById("origin-price").innerText =
-                    `${originPrice}đ`;
-                } else {
-                  document.getElementById("origin-price").innerText = "";
+                if (priceResponse.status === 0)
+                  document.getElementById("sale-price").innerText =
+                    "Sản phẩm không tồn tại!";
+                else {
+                  let originPrice = priceResponse.originPrice;
+                  let salePrice = priceResponse.salePrice;
+                  if (originPrice !== 0) {
+                    document.getElementById("origin-price").innerText =
+                      `${originPrice}đ`;
+                  } else {
+                    document.getElementById("origin-price").innerText = "";
+                  }
+                  document.getElementById("sale-price").innerText =
+                    `${salePrice}đ`;
                 }
-                document.getElementById("sale-price").innerText =
-                  `${salePrice}đ`;
               });
             }
           });
@@ -253,6 +258,10 @@
       <!--      add to cart-->
       <script>
         function addToCart() {
+          if (!document.getElementById("sale-price").innerText.includes("đ")) {
+            alert("Sản phẩm không tồn tại!");
+            return;
+          }
           let productAttributes = {};
           let numberOption = document.querySelector(
             "input[name='numberOption']",
@@ -264,13 +273,6 @@
             let selectAttribute = attribute.querySelector("select");
             productAttributes[selectAttribute.id] = selectAttribute.value;
           });
-          console.log(
-            JSON.stringify({
-              productId: productId,
-              productAttributes: productAttributes,
-              numberOption: numberOption,
-            }),
-          );
 
           fetch("/CoffeeShop/add-to-cart", {
             method: "POST",
@@ -279,8 +281,8 @@
             },
             body: JSON.stringify({
               productId: productId,
-              productAttributes: productAttributes,
-              numberOption: numberOption,
+              attributes: productAttributes,
+              quantity: numberOption,
             }),
           });
         }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -41,10 +42,16 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductVariant> getAllProductVariants(int id) {
+    public List<ProductVariant> getAllProductVariants(int productId) {
         return variantRepository.findAll().stream()
-                .filter(v -> v.getProduct().getId() == id)
+                .filter(v -> v.getProduct().getId() == productId)
                 .toList();
+    }
+
+    @Override
+    public ProductVariant getProductVariant(int productId, Map<String, Object> attributes) {
+        return getAllProductVariants(productId).stream()
+                .filter(v -> v.getAttribute().equals(attributes)).toList().getFirst();
     }
 
 

@@ -5,6 +5,7 @@ import com.swp.coffeeshop.models.Product;
 import com.swp.coffeeshop.models.ProductVariant;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IProductService {
@@ -14,5 +15,7 @@ public interface IProductService {
 
     public List<Category> getAllCategories();
 
-    public List<ProductVariant> getAllProductVariants(int id);
+    public List<ProductVariant> getAllProductVariants(int productId);
+
+    public ProductVariant getProductVariant(int productId, Map<String, Object> attributes);
 }

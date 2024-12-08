@@ -3,6 +3,7 @@ package com.swp.coffeeshop.dto;
 public class ProductPrice {
     private int originPrice;
     private int salePrice;
+    private Byte status;
 
     public ProductPrice() {
 
@@ -27,5 +28,13 @@ public class ProductPrice {
 
     public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

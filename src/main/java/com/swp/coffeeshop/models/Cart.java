@@ -12,6 +12,7 @@ import java.time.Instant;
 public class Cart {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -21,11 +22,49 @@ public class Cart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
-    private GuestUser tracking;
+    private GuestUser guest;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "product_variant_id")
+    private ProductVariant productVariant;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "total_price")
+    private Integer totalPrice;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Instant createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Instant.now();
+    }
+
+    public Cart() {
+    }
+
+    public Cart(User user, Product product, ProductVariant productVariant, Integer quantity) {
+        this.user = user;
+        this.product = product;
+        this.productVariant = productVariant;
+        this.quantity = quantity;
+    }
+
+    public Cart(GuestUser guest, Product product, ProductVariant productVariant, Integer quantity) {
+        this.guest = guest;
+        this.product = product;
+        this.productVariant = productVariant;
+        this.quantity = quantity;
+    }
 
     public Integer getId() {
         return id;
@@ -43,12 +82,44 @@ public class Cart {
         this.user = user;
     }
 
-    public GuestUser getTracking() {
-        return tracking;
+    public GuestUser getGuest() {
+        return guest;
     }
 
-    public void setTracking(GuestUser tracking) {
-        this.tracking = tracking;
+    public void setGuest(GuestUser guest) {
+        this.guest = guest;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public ProductVariant getProductVariant() {
+        return productVariant;
+    }
+
+    public void setProductVariant(ProductVariant productVariant) {
+        this.productVariant = productVariant;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Integer totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Instant getCreatedAt() {

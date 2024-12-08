@@ -1,13 +1,13 @@
 package com.swp.coffeeshop.controller;
 
-import com.swp.coffeeshop.models.ImageGalery;
-import com.swp.coffeeshop.models.Product;
-import com.swp.coffeeshop.models.Trend;
-import com.swp.coffeeshop.models.User;
+import com.swp.coffeeshop.models.*;
 import com.swp.coffeeshop.services.Galery.GaleryService;
 import com.swp.coffeeshop.services.Product.ProductService;
 import com.swp.coffeeshop.services.Trend.TrendService;
 import com.swp.coffeeshop.services.User.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +36,7 @@ public class PageController {
 
 
     @GetMapping("/home")
-    public String showHome(HttpSession session, Model model) {
+    public String showHome(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) {
         Object object = session.getAttribute("username");
         User user = null;
         if (object != null) {
@@ -44,6 +44,9 @@ public class PageController {
             user = userService.findByUsername(username);
             session.setAttribute("user", user);
         }
+
+        saveGuestUser(request, response);
+
         model.addAttribute("user", user);
 
         Trend trend = trendService.getTrendActive();
@@ -59,6 +62,29 @@ public class PageController {
         model.addAttribute("galeries", galeries);
 
         return "home";
+    }
+
+    private void saveGuestUser(HttpServletRequest request, HttpServletResponse response) {
+        String trackingId = "";
+        Cookie[] cookie = request.getCookies();
+        if (cookie != null) {
+            for (Cookie c : cookie) {
+                if (c.getName().equals("TrackingID")) {
+                    trackingId = c.getValue();
+                }
+            }
+        }
+
+        if (trackingId.isEmpty()) {
+            trackingId = java.util.UUID.randomUUID().toString();
+            Cookie cookieTrackingId = new Cookie("TrackingID", trackingId);
+            cookieTrackingId.setMaxAge(60 * 60 * 24 * 30);
+            cookieTrackingId.setPath("/");
+            response.addCookie(cookieTrackingId);
+            userService.saveGuestUser(trackingId);
+        }
+        GuestUser guest = userService.getGuestUserByTrackingId(trackingId);
+        request.getSession().setAttribute("guest", guest);
     }
 
 }
