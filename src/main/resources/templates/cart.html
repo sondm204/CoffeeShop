@@ -65,7 +65,7 @@
                     </div>
                   </td>
                   <td
-                    th:text="${cart.getProduct().getPrice() != null ? cart.getProduct().getPrice() : cart.getProductVariant().getSalePrice()}"
+                    th:text="${cart.getProductVariant() != null ? cart.getProductVariant().getSalePrice() : cart.getProduct().getPrice()}"
                   ></td>
                   <td>
                     <div class="flex items-center justify-center">
