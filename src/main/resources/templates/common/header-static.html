@@ -60,13 +60,13 @@
         <div class="flex flex-row items-center">
           <a
             th:if="${session.user == null}"
-            href="./login"
+            href="/CoffeeShop/login"
             class="cursor-pointer transition duration-200 ease-in-out hover:text-coffee-700"
             >Sign in</a
           >
           <div th:if="${session.user != null}" class="group relative">
             <a
-              href="./profile"
+              href="/CoffeeShop/profile"
               class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white"
             >
               <i class="fa-solid fa-user text-black"></i>
@@ -88,11 +88,12 @@
             </div>
           </div>
           <div id="hr" class="mx-4 border-r-2"></div>
-          <div
+          <a
+            href="/CoffeeShop/cart"
             class="flex cursor-pointer items-center transition duration-200 ease-in-out hover:text-coffee-700"
           >
             <i class="fa-solid fa-cart-shopping"></i>
-          </div>
+          </a>
         </div>
       </div>
 

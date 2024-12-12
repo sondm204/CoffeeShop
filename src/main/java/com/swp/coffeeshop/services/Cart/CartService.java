@@ -22,26 +22,69 @@ public class CartService implements ICartService {
 
     @Override
     public void addProductToCart(User user, Integer productId, Map<String, Object> attributes, Integer quantity) {
+        List<Cart> carts = null;
+        Cart cart = null;
         Product product = productService.getProduct(productId).get();
         ProductVariant productVariant = null;
-        if (!attributes.isEmpty())
+        if (!attributes.isEmpty()) {
+            carts = getAllCartByUserId(user.getId()).stream()
+                    .filter(c -> c.getProductVariant() != null && c.getProductVariant().getAttribute().equals(attributes)).toList();
+        } else {
+            carts = getAllCartByUserId(user.getId()).stream()
+                    .filter(c -> c.getProduct() != null && c.getProduct().getId().equals(productId)).toList();
+        }
+        if (!carts.isEmpty()) {
+            cart = carts.getFirst();
+            cart.addQuantity(quantity);
+        } else {
             productVariant = productService.getProductVariant(productId, attributes);
-        Cart cart = new Cart(user, product, productVariant, quantity);
+            cart = new Cart(user, product, productVariant, quantity);
+        }
         cartRepository.save(cart);
     }
 
     @Override
     public void addProductToCart(GuestUser guest, Integer productId, Map<String, Object> attributes, Integer quantity) {
+        List<Cart> carts = null;
+        Cart cart = null;
         Product product = productService.getProduct(productId).get();
         ProductVariant productVariant = null;
-        if (!attributes.isEmpty())
+        if (!attributes.isEmpty()) {
+            carts = getAllCartByTrackingId(guest.getTrackingId()).stream()
+                    .filter(c -> c.getProductVariant() != null && c.getProductVariant().getAttribute().equals(attributes)).toList();
+        } else {
+            carts = getAllCartByTrackingId(guest.getTrackingId()).stream()
+                    .filter(c -> c.getProduct() != null && c.getProduct().getId().equals(productId)).toList();
+        }
+        if (!carts.isEmpty()) {
+            cart = carts.getFirst();
+            cart.addQuantity(quantity);
+        } else {
             productVariant = productService.getProductVariant(productId, attributes);
-        Cart cart = new Cart(guest, product, productVariant, quantity);
+            cart = new Cart(guest, product, productVariant, quantity);
+        }
         cartRepository.save(cart);
     }
 
     @Override
     public List<Cart> getAllCartByUserId(Integer userId) {
-        return List.of();
+        List<Cart> carts = cartRepository.findAll();
+        return cartRepository.findAll().stream()
+                .filter(c -> c.getUser() != null && c.getUser().getId().equals(userId))
+                .sorted((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()))
+                .toList();
+    }
+
+    @Override
+    public List<Cart> getAllCartByTrackingId(String trackingId) {
+        return cartRepository.findAll().stream()
+                .filter(c -> c.getGuest() != null && c.getGuest().getTrackingId().equals(trackingId))
+                .sorted((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()))
+                .toList();
+    }
+
+    @Override
+    public void removeCart(Integer id) {
+        cartRepository.deleteById(id);
     }
 }

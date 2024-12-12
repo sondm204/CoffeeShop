@@ -1,15 +1,16 @@
 package com.swp.coffeeshop.controller;
 
+import com.swp.coffeeshop.models.Cart;
 import com.swp.coffeeshop.models.GuestUser;
 import com.swp.coffeeshop.models.User;
 import com.swp.coffeeshop.services.Cart.CartService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -38,5 +39,25 @@ public class CartController {
         }
 
         return ("redirect:/CoffeeShop/product/" + productOrder.get("productId"));
+    }
+
+    @GetMapping("/cart")
+    public String cart(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        List<Cart> carts = null;
+        if (user != null) {
+            carts = cartService.getAllCartByUserId(user.getId());
+        } else {
+            GuestUser guest = (GuestUser) session.getAttribute("guest");
+            carts = cartService.getAllCartByTrackingId(guest.getTrackingId());
+        }
+        model.addAttribute("carts", carts);
+        return "cart";
+    }
+
+    @GetMapping("/cart/remove/{id}")
+    public String removeCart(@PathVariable("id") int id) {
+        cartService.removeCart(id);
+        return "redirect:/CoffeeShop/cart";
     }
 }

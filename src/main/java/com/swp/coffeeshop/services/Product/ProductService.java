@@ -50,6 +50,7 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductVariant getProductVariant(int productId, Map<String, Object> attributes) {
+        if (attributes.isEmpty()) return null;
         return getAllProductVariants(productId).stream()
                 .filter(v -> v.getAttribute().equals(attributes)).toList().getFirst();
     }

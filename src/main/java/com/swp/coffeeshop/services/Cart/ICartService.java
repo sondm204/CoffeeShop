@@ -13,4 +13,8 @@ public interface ICartService {
     public void addProductToCart(GuestUser guest, Integer productId, Map<String, Object> attributes, Integer quantity);
 
     public List<Cart> getAllCartByUserId(Integer userId);
+
+    public List<Cart> getAllCartByTrackingId(String trackingId);
+
+    public void removeCart(Integer id);
 }
