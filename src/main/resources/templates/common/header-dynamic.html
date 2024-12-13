@@ -76,7 +76,15 @@
             href="/CoffeeShop/cart"
             class="cursor-pointer hover:text-coffee-700"
           >
-            <i class="fa-solid fa-cart-shopping"></i>
+            <div class="relative">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span
+                class="absolute -right-2 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-700 text-sm text-white"
+                th:text="${session.cartSize}"
+              >
+                0
+              </span>
+            </div>
           </a>
         </div>
       </div>

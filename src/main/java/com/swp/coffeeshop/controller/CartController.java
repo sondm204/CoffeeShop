@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class CartController {
         } else {
             return "redirect:/CoffeeShop/login";
         }
-
-        return ("redirect:/CoffeeShop/product/" + productOrder.get("productId"));
+        CommonController.updateCartSize(session);
+        return "redirect:/CoffeeShop/product/" + productOrder.get("productId");
     }
 
     @GetMapping("/cart")
@@ -56,8 +57,9 @@ public class CartController {
     }
 
     @GetMapping("/cart/remove/{id}")
-    public String removeCart(@PathVariable("id") int id) {
+    public String removeCart(@PathVariable("id") int id, HttpSession session) {
         cartService.removeCart(id);
+        CommonController.updateCartSize(session);
         return "redirect:/CoffeeShop/cart";
     }
 }

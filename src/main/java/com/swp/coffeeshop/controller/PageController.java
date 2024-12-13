@@ -1,6 +1,7 @@
 package com.swp.coffeeshop.controller;
 
 import com.swp.coffeeshop.models.*;
+import com.swp.coffeeshop.services.Cart.CartService;
 import com.swp.coffeeshop.services.Galery.GaleryService;
 import com.swp.coffeeshop.services.Product.ProductService;
 import com.swp.coffeeshop.services.Trend.TrendService;
@@ -26,12 +27,14 @@ public class PageController {
     public final ProductService productService;
     public final TrendService trendService;
     public final GaleryService galeryService;
+    public final CartService cartService;
 
-    public PageController(UserService userService, ProductService productService, TrendService trendService, GaleryService galeryService) {
+    public PageController(UserService userService, ProductService productService, TrendService trendService, GaleryService galeryService, CartService cartService) {
         this.userService = userService;
         this.productService = productService;
         this.trendService = trendService;
         this.galeryService = galeryService;
+        this.cartService = cartService;
     }
 
 
@@ -48,6 +51,8 @@ public class PageController {
         saveGuestUser(request, response);
 
         model.addAttribute("user", user);
+
+        CommonController.updateCartSize(session);
 
         Trend trend = trendService.getTrendActive();
         model.addAttribute("trend", trend);
