@@ -40,17 +40,6 @@ public class PageController {
 
     @GetMapping("/home")
     public String showHome(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Object object = session.getAttribute("username");
-        User user = null;
-        if (object != null) {
-            String username = (String) object;
-            user = userService.findByUsername(username);
-            session.setAttribute("user", user);
-        }
-
-        saveGuestUser(request, response);
-
-        model.addAttribute("user", user);
 
         CommonController.updateCartSize(session);
 
@@ -69,27 +58,5 @@ public class PageController {
         return "home";
     }
 
-    private void saveGuestUser(HttpServletRequest request, HttpServletResponse response) {
-        String trackingId = "";
-        Cookie[] cookie = request.getCookies();
-        if (cookie != null) {
-            for (Cookie c : cookie) {
-                if (c.getName().equals("TrackingID")) {
-                    trackingId = c.getValue();
-                }
-            }
-        }
-
-        if (trackingId.isEmpty()) {
-            trackingId = java.util.UUID.randomUUID().toString();
-            Cookie cookieTrackingId = new Cookie("TrackingID", trackingId);
-            cookieTrackingId.setMaxAge(60 * 60 * 24 * 30);
-            cookieTrackingId.setPath("/");
-            response.addCookie(cookieTrackingId);
-            userService.saveGuestUser(trackingId);
-        }
-        GuestUser guest = userService.getGuestUserByTrackingId(trackingId);
-        request.getSession().setAttribute("guest", guest);
-    }
 
 }

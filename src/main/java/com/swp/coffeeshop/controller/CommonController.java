@@ -1,5 +1,6 @@
 package com.swp.coffeeshop.controller;
 
+import com.swp.coffeeshop.models.GuestUser;
 import com.swp.coffeeshop.models.User;
 import com.swp.coffeeshop.services.Cart.CartService;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +15,15 @@ public class CommonController {
     }
 
     public static void updateCartSize(HttpSession session) {
-        int cartSize = cartService.getAllCartByUserId(((User) session.getAttribute("user")).getId()).size();
+        Object object = session.getAttribute("user");
+        int cartSize = 0;
+        if (object != null) {
+            User user = (User) object;
+            cartSize = cartService.getAllCartByUserId(user.getId()).size();
+        } else {
+            GuestUser guest = (GuestUser) session.getAttribute("guest");
+            cartSize = cartService.getAllCartByTrackingId(guest.getTrackingId()).size();
+        }
         session.setAttribute("cartSize", cartSize);
     }
 }
