@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkout</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="scroll-smooth font-sans">
+    <div class="flex flex-col bg-coffee-200">
+      <!-- NAVBAR SCROLL-->
+      <div th:insert="common/header-dynamic :: header"></div>
+      <div class="container mx-auto">
+        <!-- NAVBAR STATIC-->
+        <div th:insert="common/header-static :: header"></div>
+
+        <div id="content" class="grid grid-cols-3 gap-10 py-10">
+          <h1 class="col-span-3 text-3xl font-bold">CHECKOUT</h1>
+          <div class="col-span-2">
+            <div class="mb-5 rounded border border-black p-5">
+              <h2 class="mb-3 text-xl">
+                <i class="fa-solid fa-location-dot"></i> Shipping Address
+              </h2>
+              <div class="mb-3" th:if="${defaultAddress != null}">
+                <strong
+                  th:text="${defaultAddress.getFullname() + ' ' + defaultAddress.getPhone()}"
+                ></strong>
+                <span
+                  th:text="${defaultAddress.getAddressDetail() + ', ' + defaultAddress.getAddress()}"
+                ></span>
+                <span class="border border-black px-2 py-1">Mặc định</span>
+                <div class="mt-3">
+                  <a
+                    class="cursor-pointer rounded bg-coffee-700 px-3 py-2 text-white"
+                  >
+                    Thay đổi
+                  </a>
+                </div>
+              </div>
+              <div th:if="${defaultAddress == null}">
+                <div class="mb-3">You don't have any address yet.</div>
+                <div class="mb-3">
+                  <a
+                    class="cursor-pointer rounded bg-coffee-700 px-3 py-2 text-white"
+                  >
+                    Add address
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2 rounded border border-black">
+              <table class="w-full text-center">
+                <thead class="h-16 bg-black text-white">
+                  <tr>
+                    <th class="w-2/12">Product</th>
+                    <th></th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    id="cartOrder"
+                    th:each="cart : ${listCart}"
+                    class="border-b border-black"
+                  >
+                    <td>
+                      <div class="flex gap-4 px-5 py-2">
+                        <div>
+                          <img
+                            class="rounded-md"
+                            th:src="@{'/img/thumbnail/' + ${cart.getProduct().getThumbnailUrl()}}"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        th:text="${cart.getProduct().getProductName()}"
+                      ></div>
+                      <div th:if="${cart.getProductVariant() != null}">
+                        <div
+                          class="text-sm text-gray-500"
+                          th:each="attribute : ${cart.getProductVariant().getAttribute()}"
+                          th:text="${attribute.getKey() + ': ' + attribute.getValue()}"
+                        ></div>
+                      </div>
+                    </td>
+                    <td
+                      th:text="${cart.getProductVariant() != null ? cart.getProductVariant().getSalePrice() : cart.getProduct().getPrice()}"
+                    ></td>
+                    <td th:text="${cart.getQuantity()}"></td>
+                    <td
+                      id="subtotalPrice"
+                      th:text="${cart.getTotalPrice()}"
+                    ></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-span-1">
+            <h2 class="border-b border-black pb-3 text-3xl">Cart Totals</h2>
+            <div class="mt-5">
+              <table class="border-separate border-spacing-y-5 text-left">
+                <tr>
+                  <th class="w-1/2">Subtotal</th>
+                  <td><span id="subtotal">0</span><span>đ</span></td>
+                </tr>
+                <tr>
+                  <th>Shipping</th>
+                  <td>
+                    <span id="shipping">20000</span>
+                    <span>đ</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <td>
+                    <span id="total">0</span>
+                    <span>đ</span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div
+              class="mt-5 cursor-pointer bg-black py-3 text-center text-xl font-bold text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
+            >
+              <a th:href="'/CoffeeShop/checkout'">Place Order</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  FOOTER-->
+    <div th:insert="common/footer :: footer"></div>
+  </body>
+</html>
