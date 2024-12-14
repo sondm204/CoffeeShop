@@ -111,7 +111,9 @@
           <div class="col-span-1">
             <h2 class="border-b border-black pb-3 text-3xl">Cart Totals</h2>
             <div class="mt-5">
-              <table class="border-separate border-spacing-y-5 text-left">
+              <table
+                class="w-full border-separate border-spacing-y-5 text-left"
+              >
                 <tr>
                   <th class="w-1/2">Subtotal</th>
                   <td><span id="subtotal">0</span><span>đ</span></td>
@@ -143,5 +145,20 @@
     </div>
     <!--  FOOTER-->
     <div th:insert="common/footer :: footer"></div>
+
+    <!--  Calculate total price-->
+    <script>
+      let totalPrice = 0;
+      document.querySelectorAll("#cartOrder").forEach(function (cart) {
+        totalPrice += parseInt(
+          cart.querySelector("#subtotalPrice").textContent,
+        );
+      });
+      let subtotal = document.getElementById("subtotal");
+      let shipping = document.getElementById("shipping");
+      let total = document.getElementById("total");
+      subtotal.innerText = totalPrice;
+      total.innerText = totalPrice + parseInt(shipping.innerText);
+    </script>
   </body>
 </html>
