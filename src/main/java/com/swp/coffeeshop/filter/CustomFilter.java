@@ -2,6 +2,7 @@ package com.swp.coffeeshop.filter;
 
 import com.swp.coffeeshop.models.GuestUser;
 import com.swp.coffeeshop.models.User;
+import com.swp.coffeeshop.services.Cart.CartService;
 import com.swp.coffeeshop.services.User.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,9 +18,11 @@ import java.io.IOException;
 @Component
 public class CustomFilter extends OncePerRequestFilter {
     UserService userService;
+    CartService cartService;
 
-    public CustomFilter(UserService userService) {
+    public CustomFilter(UserService userService, CartService cartService) {
         this.userService = userService;
+        this.cartService = cartService;
     }
 
     @Override
@@ -31,6 +34,7 @@ public class CustomFilter extends OncePerRequestFilter {
             String username = (String) object;
             user = userService.findByUsername(username);
             session.setAttribute("user", user);
+            session.setAttribute("cartSize", cartService.getAllCartByUserId(user.getId()).size());
         } else {
             saveGuestUser(request, response);
         }
@@ -59,5 +63,6 @@ public class CustomFilter extends OncePerRequestFilter {
         }
         GuestUser guest = userService.getGuestUserByTrackingId(trackingId);
         request.getSession().setAttribute("guest", guest);
+        request.getSession().setAttribute("cartSize", cartService.getAllCartByTrackingId(trackingId).size());
     }
 }
