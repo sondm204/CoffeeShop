@@ -18,5 +18,7 @@ public interface ICartService {
 
     public void removeCart(Integer id);
 
+    public void removeCart(List<Integer> listCartId);
+
     public Cart getCartById(Integer id);
 }

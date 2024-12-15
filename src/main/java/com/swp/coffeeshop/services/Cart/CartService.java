@@ -89,6 +89,14 @@ public class CartService implements ICartService {
     }
 
     @Override
+    public void removeCart(List<Integer> list) {
+        for (Integer id : list) {
+            cartRepository.deleteById(id);
+        }
+    }
+
+
+    @Override
     public Cart getCartById(Integer id) {
         return cartRepository.findById(id).get();
     }

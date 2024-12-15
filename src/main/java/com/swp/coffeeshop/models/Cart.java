@@ -24,12 +24,12 @@ public class Cart {
     @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
     private GuestUser guest;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "product_variant_id")
     private ProductVariant productVariant;

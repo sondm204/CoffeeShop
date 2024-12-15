@@ -41,6 +41,11 @@
                   <td>
                     <div class="flex gap-4 px-5 py-2">
                       <input
+                        name="cartId"
+                        type="hidden"
+                        th:value="${cart.getId()}"
+                      />
+                      <input
                         onchange="calculateTotalPrice()"
                         type="checkbox"
                         class="scale-150"
@@ -135,9 +140,10 @@
               </table>
             </div>
             <div
+              id="checkout"
               class="mt-5 cursor-pointer bg-black py-3 text-center text-xl font-bold text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
             >
-              <a th:href="'/CoffeeShop/checkout'">Checkout</a>
+              Checkout
             </div>
           </div>
         </div>
@@ -178,6 +184,26 @@
         subtotal.innerText = totalPrice;
         total.innerText = totalPrice + parseInt(shipping.innerText);
       }
+    </script>
+
+    <!--  Click checkout-->
+    <script>
+      document
+        .querySelector("#checkout")
+        .addEventListener("click", function () {
+          let listCartId = [];
+          document.querySelectorAll("#cartOrder").forEach(function (cart) {
+            if (cart.querySelector("input[type='checkbox']").checked) {
+              listCartId.push(cart.querySelector("input[name='cartId']").value);
+            }
+          });
+          if (listCartId.length === 0) {
+            alert("Chưa chọn sản phẩm!");
+          } else {
+            window.location.href =
+              "/CoffeeShop/checkout?listCartId=" + listCartId.join(",");
+          }
+        });
     </script>
   </body>
 </html>

@@ -29,8 +29,13 @@
                 <i class="fa-solid fa-location-dot"></i> Shipping Address
               </h2>
               <div class="mb-3" th:if="${defaultAddress != null}">
+                <input
+                  type="hidden"
+                  name="addressId"
+                  th:value="${defaultAddress.getId()}"
+                />
                 <strong
-                  th:text="${defaultAddress.getFullname() + ' ' + defaultAddress.getPhone()}"
+                  th:text="${defaultAddress.getFullname() + ' (' + defaultAddress.getPhone() + ')'}"
                 ></strong>
                 <span
                   th:text="${defaultAddress.getAddressDetail() + ', ' + defaultAddress.getAddress()}"
@@ -74,13 +79,16 @@
                   >
                     <td>
                       <div class="flex gap-4 px-5 py-2">
-                        <div>
-                          <img
-                            class="rounded-md"
-                            th:src="@{'/img/thumbnail/' + ${cart.getProduct().getThumbnailUrl()}}"
-                            alt=""
-                          />
-                        </div>
+                        <input
+                          type="hidden"
+                          name="cartId"
+                          th:value="${cart.getId()}"
+                        />
+                        <img
+                          class="rounded-md"
+                          th:src="@{'/img/thumbnail/' + ${cart.getProduct().getThumbnailUrl()}}"
+                          alt=""
+                        />
                       </div>
                     </td>
                     <td>
@@ -109,7 +117,8 @@
             </div>
           </div>
           <div class="col-span-1">
-            <h2 class="border-b border-black pb-3 text-3xl">Cart Totals</h2>
+            <h2 class="pb-3 text-3xl">Cart Totals</h2>
+            <hr class="border border-black" />
             <div class="mt-5">
               <table
                 class="w-full border-separate border-spacing-y-5 text-left"
@@ -134,10 +143,35 @@
                 </tr>
               </table>
             </div>
+            <hr class="mb-3 border border-black" />
+            <div class="mb-3">
+              <h3 class="text-xl">Payment Methods</h3>
+              <div class="mt-2">
+                <div class="mb-3">
+                  <input
+                    type="radio"
+                    name="payment"
+                    id="paymentByCash"
+                    value="1"
+                    checked
+                  />
+                  <label for="paymentByCash">Payment by cash</label>
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="radio"
+                    name="payment"
+                    id="paymentByCard"
+                    value="2"
+                  />
+                  <label for="paymentByCard">Payment by card</label>
+                </div>
+              </div>
+            </div>
             <div
               class="mt-5 cursor-pointer bg-black py-3 text-center text-xl font-bold text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
             >
-              <a th:href="'/CoffeeShop/checkout'">Place Order</a>
+              <div id="place-order">Place Order</div>
             </div>
           </div>
         </div>
@@ -159,6 +193,49 @@
       let total = document.getElementById("total");
       subtotal.innerText = totalPrice;
       total.innerText = totalPrice + parseInt(shipping.innerText);
+    </script>
+
+    <!--      Place order-->
+    <script>
+      let placeOrder = document.getElementById("place-order");
+      placeOrder.addEventListener("click", function () {
+        let cartIds = [];
+        let cartElement = document.querySelectorAll('input[name="cartId"]');
+        cartElement.forEach(function (cart) {
+          cartIds.push(cart.value);
+        });
+        let addressId = document.querySelector('input[name="addressId"]').value;
+        let totalAmount = document.getElementById("total").innerText;
+        let paymentMethod = document.querySelector(
+          'input[name="payment"]',
+        ).value;
+        console.log(
+          JSON.stringify({
+            cartIds: cartIds,
+            addressId: addressId,
+            totalAmount: totalAmount,
+            paymentMethod: paymentMethod,
+          }),
+        );
+        fetch("/CoffeeShop/checkout/check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            cartIds: cartIds,
+            addressId: addressId,
+            totalAmount: totalAmount,
+            paymentMethod: paymentMethod,
+          }),
+        })
+          .then(function (response) {
+            window.location.replace("/CoffeeShop/checkout/success");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
     </script>
   </body>
 </html>

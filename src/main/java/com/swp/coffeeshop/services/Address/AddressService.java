@@ -16,6 +16,11 @@ public class AddressService implements IAddressService {
     }
 
     @Override
+    public UserAddress getAddressById(Integer id) {
+        return addressRepository.findById(id).get();
+    }
+
+    @Override
     public List<UserAddress> getAllAddressByUserId(Integer userId) {
         return addressRepository.findAll().stream()
                 .filter(a -> a.getUser() != null && a.getUser().getId().equals(userId)).toList();
