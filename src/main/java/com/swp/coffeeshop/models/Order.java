@@ -24,7 +24,7 @@ public class Order {
 
     @OneToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
+    @JoinColumn(name = "tracking_id")
     private GuestUser guest;
 
     @OneToOne(fetch = FetchType.EAGER)

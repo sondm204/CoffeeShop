@@ -206,17 +206,15 @@
         });
         let addressId = document.querySelector('input[name="addressId"]').value;
         let totalAmount = document.getElementById("total").innerText;
-        let paymentMethod = document.querySelector(
+        let paymentElements = document.querySelectorAll(
           'input[name="payment"]',
-        ).value;
-        console.log(
-          JSON.stringify({
-            cartIds: cartIds,
-            addressId: addressId,
-            totalAmount: totalAmount,
-            paymentMethod: paymentMethod,
-          }),
         );
+        let paymentMethod = "";
+        paymentElements.forEach(function (payment) {
+          if (payment.checked) {
+            paymentMethod = payment.value;
+          }
+        });
         fetch("/CoffeeShop/checkout/check", {
           method: "POST",
           headers: {
@@ -230,7 +228,10 @@
           }),
         })
           .then(function (response) {
-            window.location.replace("/CoffeeShop/checkout/success");
+            return response.text();
+          })
+          .then(function (data) {
+            window.location.replace(data);
           })
           .catch(function (error) {
             console.log(error);

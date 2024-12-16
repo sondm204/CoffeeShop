@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/CoffeeShop/")
+@RequestMapping("/CoffeeShop")
 public class CheckoutController {
 
     CartService cartService;
@@ -58,30 +58,36 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout/check")
+    @ResponseBody
     public String checkout(@RequestBody OrderRequest orderRequest, HttpSession session, Model model) {
         List<Integer> listCartId = orderRequest.getCartIds();
         UserAddress address = addressService.getAddressById(orderRequest.getAddressId());
         Integer totalAmount = orderRequest.getTotalAmount();
         String paymentMethod = orderRequest.getPaymentMethod();
 
-        Order newOrder = new Order(address, totalAmount, paymentMethod);
-        Object object = session.getAttribute("user");
-        if (object != null) {
-            User user = (User) object;
-            newOrder.setUser(user);
+        if (paymentMethod.equals("2")) {
+            return "/CoffeeShop/vnpay/pay?amount=" + totalAmount;
         } else {
-            GuestUser guest = (GuestUser) session.getAttribute("guest");
-            newOrder.setGuest(guest);
+
+            Order newOrder = new Order(address, totalAmount, paymentMethod);
+            Object object = session.getAttribute("user");
+            if (object != null) {
+                User user = (User) object;
+                newOrder.setUser(user);
+            } else {
+                GuestUser guest = (GuestUser) session.getAttribute("guest");
+                newOrder.setGuest(guest);
+            }
+//        orderService.saveOrder(newOrder);
+            for (Integer cartId : listCartId) {
+                Cart cart = cartService.getCartById(cartId);
+                OrderItem orderItem = new OrderItem(newOrder, cart.getProduct(), cart.getQuantity(), cart.getTotalPrice());
+                if (cart.getProductVariant() != null) orderItem.setProductVariant(cart.getProductVariant());
+//            orderService.saveOrderItem(orderItem);
+            }
+//        cartService.removeCart(listCartId);
+            return "order-success";
         }
-        orderService.saveOrder(newOrder);
-        for (Integer cartId : listCartId) {
-            Cart cart = cartService.getCartById(cartId);
-            OrderItem orderItem = new OrderItem(newOrder, cart.getProduct(), cart.getQuantity(), cart.getTotalPrice());
-            if (cart.getProductVariant() != null) orderItem.setProductVariant(cart.getProductVariant());
-            orderService.saveOrderItem(orderItem);
-        }
-        cartService.removeCart(listCartId);
-        return "order-success";
     }
 
     @GetMapping("/checkout/success")
