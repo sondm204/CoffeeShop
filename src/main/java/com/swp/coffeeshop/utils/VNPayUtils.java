@@ -1,4 +1,4 @@
-package com.swp.coffeeshop.VNPay;
+package com.swp.coffeeshop.utils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,7 +20,7 @@ public class VNPayUtils {
             String key = entry.getKey();
             String value = URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8);
 
-            if (query.length() > 0) {
+            if (!query.isEmpty()) {
                 query.append("&");
                 hashData.append("&");
             }

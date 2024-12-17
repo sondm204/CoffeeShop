@@ -1,21 +1,26 @@
 package com.swp.coffeeshop.controller;
 
-import com.swp.coffeeshop.VNPay.VNPayUtils;
+import com.swp.coffeeshop.utils.UrlUtils;
+import com.swp.coffeeshop.utils.VNPayUtils;
+import com.swp.coffeeshop.dto.VNPayResponse;
+import com.swp.coffeeshop.services.Cart.CartService;
+import com.swp.coffeeshop.services.Order.OrderService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Controller
 @RequestMapping("/CoffeeShop")
@@ -31,6 +36,10 @@ public class VNPayController {
 
     @Value("${vnpay.return_url}")
     private String returnUrl;
+
+    OrderService orderService;
+    CartService cartService;
+
 
     @GetMapping("/vnpay/pay")
     public void createPayment(@RequestParam("amount") int amount, HttpServletResponse response) throws Exception {
@@ -54,12 +63,16 @@ public class VNPayController {
     }
 
     @GetMapping("/vnpay/return")
-    @ResponseBody
-    public String paymentReturn(@RequestParam Map<String, String> allParams) throws Exception {
+    public RedirectView paymentReturn(@RequestParam Map<String, String> allParams, Model model, HttpSession session) throws Exception {
         if (!validateVNPayResponse(allParams, hashSecret)) {
-            return "Payment failed";
+            return new RedirectView("/payment-fail");
         }
-        return "Payment result: " + allParams;
+        if (allParams.get("vnp_ResponseCode").equals("00")) {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/CoffeeShop/checkout/success");
+            allParams.forEach(builder::queryParam);
+            return new RedirectView(builder.toUriString());
+        }
+        return new RedirectView("/payment-fail");
     }
 
     public boolean validateVNPayResponse(Map<String, String> params, String hashSecret) throws Exception {

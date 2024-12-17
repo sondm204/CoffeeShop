@@ -1,19 +1,19 @@
 package com.swp.coffeeshop.controller;
 
 import com.swp.coffeeshop.dto.OrderRequest;
+import com.swp.coffeeshop.dto.VNPayResponse;
 import com.swp.coffeeshop.models.*;
-import com.swp.coffeeshop.repositories.OrderItemRepository;
 import com.swp.coffeeshop.services.Address.AddressService;
 import com.swp.coffeeshop.services.Cart.CartService;
 import com.swp.coffeeshop.services.Order.OrderService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/CoffeeShop")
@@ -22,6 +22,9 @@ public class CheckoutController {
     CartService cartService;
     AddressService addressService;
     OrderService orderService;
+    List<Integer> listCartId;
+    Order newOrder;
+
 
     public CheckoutController(CartService cartService, AddressService addressService, OrderService orderService) {
         this.cartService = cartService;
@@ -60,38 +63,43 @@ public class CheckoutController {
     @PostMapping("/checkout/check")
     @ResponseBody
     public String checkout(@RequestBody OrderRequest orderRequest, HttpSession session, Model model) {
-        List<Integer> listCartId = orderRequest.getCartIds();
+        listCartId = orderRequest.getCartIds();
         UserAddress address = addressService.getAddressById(orderRequest.getAddressId());
         Integer totalAmount = orderRequest.getTotalAmount();
         String paymentMethod = orderRequest.getPaymentMethod();
 
+        newOrder = new Order(address, totalAmount, paymentMethod);
+        Object object = session.getAttribute("user");
+        if (object != null) {
+            User user = (User) object;
+            newOrder.setUser(user);
+        } else {
+            GuestUser guest = (GuestUser) session.getAttribute("guest");
+            newOrder.setGuest(guest);
+        }
+
         if (paymentMethod.equals("2")) {
             return "/CoffeeShop/vnpay/pay?amount=" + totalAmount;
         } else {
-
-            Order newOrder = new Order(address, totalAmount, paymentMethod);
-            Object object = session.getAttribute("user");
-            if (object != null) {
-                User user = (User) object;
-                newOrder.setUser(user);
-            } else {
-                GuestUser guest = (GuestUser) session.getAttribute("guest");
-                newOrder.setGuest(guest);
-            }
-//        orderService.saveOrder(newOrder);
-            for (Integer cartId : listCartId) {
-                Cart cart = cartService.getCartById(cartId);
-                OrderItem orderItem = new OrderItem(newOrder, cart.getProduct(), cart.getQuantity(), cart.getTotalPrice());
-                if (cart.getProductVariant() != null) orderItem.setProductVariant(cart.getProductVariant());
-//            orderService.saveOrderItem(orderItem);
-            }
-//        cartService.removeCart(listCartId);
-            return "order-success";
+            return "/CoffeeShop/checkout/success";
         }
     }
 
     @GetMapping("/checkout/success")
-    public String showCheckoutSuccess() {
+    public String showCheckoutSuccess(@RequestParam Map<String, String> params, Model model) {
+        orderService.saveOrder(newOrder);
+        for (Integer cartId : listCartId) {
+            Cart cart = cartService.getCartById(cartId);
+            OrderItem orderItem = new OrderItem(newOrder, cart.getProduct(), cart.getQuantity(), cart.getTotalPrice());
+            if (cart.getProductVariant() != null) orderItem.setProductVariant(cart.getProductVariant());
+            orderService.saveOrderItem(orderItem);
+        }
+        cartService.removeCart(listCartId);
+        if (!params.isEmpty()) {
+            VNPayResponse response = new VNPayResponse(params);
+            model.addAttribute("response", response);
+            return "payment-success";
+        }
         return "order-success";
     }
 }
