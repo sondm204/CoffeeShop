@@ -16,10 +16,10 @@
   <body class="scroll-smooth font-sans">
     <div class="flex flex-col bg-coffee-200">
       <!-- NAVBAR SCROLL-->
-      <div th:insert="common/header-dynamic :: header"></div>
+      <div th:insert="~{common/header-dynamic :: header}"></div>
       <div class="container mx-auto">
         <!-- NAVBAR STATIC-->
-        <div th:insert="common/header-static :: header"></div>
+        <div th:insert="~{common/header-static :: header}"></div>
 
         <div id="content" class="grid grid-cols-3 gap-10 py-10">
           <h1 class="col-span-3 text-3xl font-bold">CHECKOUT</h1>
@@ -178,7 +178,7 @@
       </div>
     </div>
     <!--  FOOTER-->
-    <div th:insert="common/footer :: footer"></div>
+    <div th:insert="~{common/footer :: footer}"></div>
 
     <!--  Calculate total price-->
     <script>

@@ -55,7 +55,7 @@ public class CaffeShopSecurity {
                 .authorizeHttpRequests(configurer ->
                         configurer
                                 .requestMatchers("/CoffeeShop/**").permitAll()
-                                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())

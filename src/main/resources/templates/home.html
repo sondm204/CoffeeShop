@@ -16,7 +16,7 @@
   <body class="overflow-x-hidden scroll-smooth font-serif">
     <div class="flex flex-col">
       <!-- HEADER DYNAMIC -->
-      <div th:insert="common/header-dynamic :: header"></div>
+      <div th:insert="~{common/header-dynamic :: header}"></div>
 
       <section class="h-screen">
         <div
@@ -24,7 +24,7 @@
         >
           <div class="container m-auto">
             <!-- HEADER STATIC -->
-            <div th:insert="common/header-static :: header"></div>
+            <div th:insert="~{common/header-static :: header}"></div>
 
             <!-- CONTENT -->
             <div class="mt-7 grid grid-cols-12 gap-2">
@@ -324,7 +324,7 @@
       </section>
 
       <!-- FOOTER -->
-      <section th:insert="common/footer :: footer"></section>
+      <section th:insert="~{common/footer :: footer}"></section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
   </body>

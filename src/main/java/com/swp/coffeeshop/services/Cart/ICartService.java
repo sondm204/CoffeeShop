@@ -21,4 +21,6 @@ public interface ICartService {
     public void removeCart(List<Integer> listCartId);
 
     public Cart getCartById(Integer id);
+
+    public void updateQuantity(Integer id, Integer quantity);
 }

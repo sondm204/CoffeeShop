@@ -18,12 +18,12 @@
       <!-- NAVBAR -->
       <div class="flex flex-col bg-coffee-200">
         <!-- NAVBAR SCROLL-->
-        <div th:insert="common/header-dynamic::header"></div>
+        <div th:insert="~{common/header-dynamic::header}"></div>
 
         <div class="container mx-auto">
           <div class="mx-auto">
             <!-- NAVBAR STATIC-->
-            <div th:insert="common/header-static :: header"></div>
+            <div th:insert="~{common/header-static :: header}"></div>
           </div>
 
           <!--CONTENT-->
@@ -190,10 +190,18 @@
               </div>
             </div>
           </div>
+
+          <!--          Add To Cart Success-->
+          <div
+            id="cart-success"
+            class="pointer-events-none fixed bottom-5 right-5 rounded-lg bg-green-500 px-4 py-2 text-white opacity-0 shadow-lg transition-all duration-500"
+          >
+            <span>Đã thêm sản phẩm vào giỏ hàng!</span>
+          </div>
         </div>
 
         <!--FOOTER-->
-        <div th:insert="common/footer :: footer"></div>
+        <div th:insert="~{common/footer :: footer}"></div>
       </div>
 
       <!--      Change number button-->
@@ -285,7 +293,27 @@
               attributes: productAttributes,
               quantity: numberOption,
             }),
-          }).then((response) => window.location.reload());
+          }).then((response) => {
+            let newUrl = new URL(window.location.href);
+            newUrl.searchParams.set("cartUpdate", "true");
+            window.location.href = newUrl.toString();
+          });
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const cartUpdate = urlParams.get("cartUpdate");
+        if (cartUpdate === "true") showCartSuccess();
+
+        function showCartSuccess() {
+          const cartSuccess = document.getElementById("cart-success");
+          cartSuccess.classList.remove("opacity-0", "pointer-events-none");
+          cartSuccess.classList.add("opacity-100", "pointer-events-auto");
+
+          // Tự động ẩn thông báo sau 3 giây
+          setTimeout(function () {
+            cartSuccess.classList.remove("opacity-100", "pointer-events-auto");
+            cartSuccess.classList.add("opacity-0", "pointer-events-none");
+          }, 3000);
         }
       </script>
     </div>

@@ -100,4 +100,11 @@ public class CartService implements ICartService {
     public Cart getCartById(Integer id) {
         return cartRepository.findById(id).get();
     }
+
+    @Override
+    public void updateQuantity(Integer id, Integer quantity) {
+        Cart cart = getCartById(id);
+        cart.setQuantity(quantity);
+        cartRepository.save(cart);
+    }
 }

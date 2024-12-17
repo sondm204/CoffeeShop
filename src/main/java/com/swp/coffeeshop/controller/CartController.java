@@ -62,4 +62,13 @@ public class CartController {
         CommonController.updateCartSize(session);
         return "redirect:/CoffeeShop/cart";
     }
+
+    @PostMapping("/cart/update-quantity")
+    public String updateQuantity(@RequestBody Map<String, Object> cartUpdate) {
+        Integer cartId = Integer.parseInt(cartUpdate.get("cartId").toString());
+        Integer quantity = Integer.parseInt(cartUpdate.get("quantity").toString());
+        cartService.updateQuantity(cartId, quantity);
+        return "redirect:/CoffeeShop/cart";
+    }
+
 }
