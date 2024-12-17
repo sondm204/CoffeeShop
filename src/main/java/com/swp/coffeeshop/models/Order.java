@@ -14,17 +14,22 @@ import java.util.List;
 public class Order {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
-    private GuestUser tracking;
+    @JoinColumn(name = "tracking_id")
+    private GuestUser guest;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
+    private UserAddress address;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "ordered_date")
@@ -33,12 +38,25 @@ public class Order {
     @Column(name = "total_price")
     private Integer totalPrice;
 
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
     @Lob
     @Column(name = "status")
+    @ColumnDefault("pending")
     private String status;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    public Order() {
+    }
+
+    public Order(UserAddress address, Integer totalPrice, String paymentMethod) {
+        this.address = address;
+        this.totalPrice = totalPrice;
+        this.paymentMethod = paymentMethod;
+    }
 
     public Integer getId() {
         return id;
@@ -56,12 +74,12 @@ public class Order {
         this.user = user;
     }
 
-    public GuestUser getTracking() {
-        return tracking;
+    public GuestUser getGuest() {
+        return guest;
     }
 
-    public void setTracking(GuestUser tracking) {
-        this.tracking = tracking;
+    public void setGuest(GuestUser guest) {
+        this.guest = guest;
     }
 
     public Instant getOrderedDate() {
@@ -99,5 +117,21 @@ public class Order {
     public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         orderItem.setOrder(this);
+    }
+
+    public UserAddress getAddress() {
+        return address;
+    }
+
+    public void setAddress(UserAddress address) {
+        this.address = address;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }

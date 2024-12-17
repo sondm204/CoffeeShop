@@ -9,19 +9,20 @@ import org.hibernate.annotations.OnDeleteAction;
 public class OrderItem {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "product_variant_id")
     private ProductVariant productVariant;
@@ -31,6 +32,16 @@ public class OrderItem {
 
     @Column(name = "total_price")
     private Integer totalPrice;
+
+    public OrderItem() {
+    }
+
+    public OrderItem(Order order, Product product, Integer quantity, Integer totalPrice) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+    }
 
     public Integer getId() {
         return id;

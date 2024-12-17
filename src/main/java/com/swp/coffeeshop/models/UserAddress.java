@@ -9,13 +9,13 @@ public class UserAddress {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
-    private GuestUser tracking;
+    private GuestUser guest;
 
     @Column(name = "fullname")
     private String fullname;
@@ -29,7 +29,7 @@ public class UserAddress {
     @Column(name = "address_detail")
     private String addressDetail;
 
-    @Column(name = "isDefault")
+    @Column(name = "is_default")
     private Byte isDefault;
 
     public Integer getId() {
@@ -48,12 +48,12 @@ public class UserAddress {
         this.user = user;
     }
 
-    public GuestUser getTracking() {
-        return tracking;
+    public GuestUser getGuest() {
+        return guest;
     }
 
-    public void setTracking(GuestUser tracking) {
-        this.tracking = tracking;
+    public void setGuest(GuestUser guest) {
+        this.guest = guest;
     }
 
     public String getFullname() {

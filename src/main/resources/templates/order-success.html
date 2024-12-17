@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link
+      th:href="@{'/css/output.css'}"
+      href="../static/css/output.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans">
+    <div class="flex h-screen items-center justify-center bg-black/50">
+      <div class="flex flex-col items-center rounded bg-white p-4">
+        <h1 class="mb-3 text-4xl font-bold">Đặt hàng thành công</h1>
+        <p class="mb-3 text-2xl font-bold">Cám ơn quý khách đã đặt hàng</p>
+        <p class="mb-3">
+          Đơn hàng của bạn sẽ được giao trong thời gian sớm nhất
+        </p>
+        <div class="mb-3 flex items-center justify-center gap-3">
+          <a
+            href="/CoffeeShop/home"
+            class="cursor-pointer rounded bg-coffee-700 px-3 py-2 text-white hover:bg-coffee-500"
+            >Quay về trang chủ</a
+          >
+          <a
+            href="/CoffeeShop/order"
+            class="cursor-pointer rounded bg-coffee-700 px-3 py-2 text-white hover:bg-coffee-500"
+            >Xem đơn hàng</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

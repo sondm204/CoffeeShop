@@ -17,4 +17,8 @@ public interface ICartService {
     public List<Cart> getAllCartByTrackingId(String trackingId);
 
     public void removeCart(Integer id);
+
+    public void removeCart(List<Integer> listCartId);
+
+    public Cart getCartById(Integer id);
 }
