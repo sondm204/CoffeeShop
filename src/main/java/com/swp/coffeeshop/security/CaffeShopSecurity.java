@@ -66,6 +66,11 @@ public class CaffeShopSecurity {
                                 .successHandler(customAuthenticationSuccessHandler)
                                 .permitAll()
                 )
+                .rememberMe(configurer ->
+                        configurer
+                                .key("uniqueAndSecret")
+                                .tokenValiditySeconds(86400)
+                )
                 .logout(configurer ->
                         configurer.permitAll()
                 )
